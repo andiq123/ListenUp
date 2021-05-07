@@ -1,0 +1,53 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  .right-section {
+    display: flex;
+    .bigScreen {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+button {
+  padding: 10px;
+  font-size: 1.2rem;
+}
+
+.logo {
+  display: flex;
+  flex-flow: row;
+  h3 {
+    margin-top: -2px;
+    color: rgb(173, 100, 100);
+    transition: margin 200ms ease-in-out;
+  }
+}
+
+.logo:hover {
+  h3 {
+    margin-top: -5px;
+  }
+}
+
+.logo:active {
+  h3 {
+    margin-top: -2px;
+  }
+}
+
+.hamburgher-menu {
+  visibility: hidden;
+  transform: scale(1.3);
+}
+
+@media only screen and (max-width: 800px) {
+  .bigScreen {
+    visibility: hidden;
+  }
+  .hamburgher-menu {
+    visibility: visible;
+  }
+}

@@ -1,0 +1,24 @@
+<mat-card *ngIf="song">
+    <mat-card-content>
+        <p>{{song.id}}</p>
+        <button mat-button (click)="selectSongToPlay()" [disabled]="progress > 0">
+            <mat-progress-spinner [mode]="progress>0 ? 'determinate' : 'indeterminate'" [color]="colorLoading"
+                [value]="progress" *ngIf="loading">
+            </mat-progress-spinner>
+            <mat-icon *ngIf="!loading && progress === 0">{{playing ? "pause" : "play_arrow"}}</mat-icon>
+        </button>
+        <div class="songName">
+            <p class="name"> {{song.name}}</p>
+            <p class="title">{{getSongTitle() }}</p>
+        </div>
+        <div class="right-section">
+            <button mat-button class="addFav" *ngIf="isAuthenticated"
+                (click)="!isAddedToLibrary? addSongToFav() : removeSongFromFav()">
+                <mat-icon>{{!isAddedToLibrary ? 'library_add':'remove_circle_outline'}}</mat-icon>
+            </button>
+            <button mat-button class="download" (click)="downloadSong()">
+                <mat-icon>download</mat-icon>
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>

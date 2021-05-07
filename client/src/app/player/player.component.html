@@ -1,0 +1,27 @@
+<div class="player" *ngIf="song">
+    <button mat-raised-button (click)="play()">
+        <mat-icon>{{playing ? "pause" : "play_arrow"}}</mat-icon>
+    </button>
+    <div class="right-section">
+        <div class="labels">
+            <div class="songName">
+                <div class="title">{{getTrimmedText(song.title)}}</div>
+                <div class="name">{{getTrimmedText(song.name)}}</div>
+            </div>
+            <div class="volume">Volume</div>
+        </div>
+        <div class="actions">
+            <div class="timespan" *ngIf="currentTime && duration">
+                <mat-slider min="0" [max]="audioPlayer.duration" step="0.5" [value]="changeAbleTime"
+                    (input)="desactivateChanging()" (change)="changeSongTime($event)">
+                </mat-slider>
+                <span>{{currentTime.min}}:{{currentTime.sec}}/{{duration.min}}:{{duration.sec}}</span>
+            </div>
+            <div class="volume">
+                <mat-slider min="0" max="1" step="0.1" [value]="this.volume" (input)="changeVolume($event)">
+                </mat-slider>
+            </div>
+        </div>
+    </div>
+
+</div>

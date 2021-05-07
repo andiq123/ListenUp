@@ -1,0 +1,29 @@
+.loading-state {
+  width: 40%;
+  margin: 50px auto;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.song {
+  margin-top: 40px;
+  background-color: rgb(71, 68, 68);
+  height: 40px;
+  border-radius: 0 20px 20px 0;
+  animation: loading 700ms infinite;
+}
+
+@keyframes loading {
+  0% {
+    width: 90%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@media only screen and(max-width:800px) {
+  .loading-state {
+  }
+}

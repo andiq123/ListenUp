@@ -1,0 +1,21 @@
+.home-container {
+  width: 100%;
+  flex-flow: row wrap;
+  margin: 20px auto;
+  // justify-content: space-around;
+}
+
+.left-section {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.right-section {
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 950px) {
+  .left-section {
+    width: 100%;
+  }
+}

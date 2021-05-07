@@ -1,0 +1,29 @@
+form {
+  width: 40%;
+  margin: 100px auto 0 auto;
+  display: flex;
+  flex-flow: column;
+  font-size: 1.5rem;
+  input {
+    padding: 5px;
+  }
+  button {
+    padding: 10px;
+    font-size: 1.5rem;
+  }
+}
+
+.register-section {
+  width: 40%;
+  margin: 20px auto;
+  button {
+    font-size: 1.5rem;
+    padding: 10px;
+  }
+}
+
+@media only screen and(max-width:800px) {
+  form {
+    width: 98%;
+  }
+}

@@ -1,0 +1,23 @@
+.example-container {
+  height: 91.2vh;
+}
+
+.example-sidena {
+  visibility: hidden;
+}
+
+.header {
+  display: flex;
+  flex-flow: column;
+  button {
+    padding: 5px 70px;
+  }
+}
+
+//content-section
+
+@media only screen and(min-width:801px) {
+  .example-sidena {
+    visibility: visible;
+  }
+}

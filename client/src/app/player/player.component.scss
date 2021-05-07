@@ -1,0 +1,92 @@
+.player {
+  width: 60%;
+  height: 80px;
+  position: absolute;
+  top: 85%;
+  left: 22%;
+  z-index: 1;
+  color: white;
+  padding: 10px;
+
+  outline: none;
+  background-color: rgb(32, 29, 29);
+
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+
+  button {
+    mat-icon {
+      transform: scale(2);
+    }
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .right-section {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    .labels {
+      margin-left: 8px;
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      .songName {
+        .title {
+          font-size: 1.2rem;
+        }
+      }
+    }
+    .actions {
+      width: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      .timespan {
+        width: 72%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        mat-slider {
+          width: 100%;
+        }
+      }
+      .volume {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .player {
+    width: 97%;
+    left: 0;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .player {
+    width: 93.5%;
+    left: 0;
+    .labels {
+      .songName {
+        .title {
+          display: none;
+        }
+      }
+      .volume {
+        display: none;
+      }
+    }
+    .actions {
+      .timespan {
+        width: 100%;
+        flex: 1;
+      }
+      .volume {
+        display: none;
+      }
+    }
+  }
+}

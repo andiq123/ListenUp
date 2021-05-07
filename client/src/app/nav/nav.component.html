@@ -1,0 +1,25 @@
+<mat-toolbar>
+    <div class="container nav">
+        <button mat-button routerLink="/home">
+            <div class="logo">
+                <h2>Listen</h2>
+                <h3>Up</h3>
+            </div>
+        </button>
+        <div class="right-section">
+            <div class="bigScreen">
+                <button mat-button routerLink="/home" routerLinkActive="active">Home</button>
+                <button mat-button *ngIf="isAuthenticated" routerLink="/mysongs" routerLinkActive="active">My
+                    Songs</button>
+                <button mat-button *ngIf="!isAuthenticated" routerLink="/login" routerLinkActive="active">Login</button>
+                <button mat-button *ngIf="isAuthenticated" routerLink="/signout">Sign
+                    Out</button>
+            </div>
+            <div class="hamburgher-menu">
+                <button mat-button (click)="toggleDrawer()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>

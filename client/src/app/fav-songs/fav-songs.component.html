@@ -1,0 +1,2 @@
+<app-songs [getFavSongs]="true" (noFavSongEvent)="setError($event)"></app-songs>
+<h2 *ngIf="error">{{error}}</h2>
