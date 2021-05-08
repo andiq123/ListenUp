@@ -60,8 +60,8 @@ namespace back
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<Loading>("/loading");
-                endpoints.MapHub<UsersOnSite>("/presence");
+                endpoints.MapHub<Loading>("/signalr/loading");
+                endpoints.MapHub<UsersOnSite>("/signalr/presence");
                 endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
