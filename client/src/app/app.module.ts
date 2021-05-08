@@ -21,6 +21,7 @@ import { SignOutComponent } from './sign-out/sign-out.component';
 import { TokenInterceptor } from './_interceptors/token.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { PresenceComponent } from './presence/presence.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { environment } from '../environments/environment';
     FavSongsComponent,
     RegisterComponent,
     SignOutComponent,
+    PresenceComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ import { environment } from '../environments/environment';
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [

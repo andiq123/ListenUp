@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
+import { IPagination } from 'src/app/_models/pagination';
 import { ISong } from 'src/app/_models/song';
 import { PlayerService } from 'src/app/_services/player.service';
 import { SignalrService } from 'src/app/_services/signalr.service';
@@ -16,6 +17,8 @@ export class SongsComponent implements OnInit, OnDestroy {
   songs: ISong[] = [];
   error: string = '';
   loading: boolean = false;
+  pagination!: IPagination;
+  pages: any[] = [];
 
   constructor(
     private songsService: SongsService,
@@ -26,6 +29,7 @@ export class SongsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.waitForPagination();
     // this.loadDebugSongs();
     this.signalrService.connectToSignal();
 
@@ -38,6 +42,20 @@ export class SongsComponent implements OnInit, OnDestroy {
     this.listenForSongChanged();
     this.listenForLoadingStatus();
     this.listenForError();
+  }
+
+  changePage(pageNumber: number) {
+    this.songsService.loadSongs(undefined, pageNumber);
+  }
+
+  waitForPagination() {
+    this.songsService.paginationChanged.subscribe((pagination) => {
+      this.pages = [];
+      this.pagination = pagination;
+      for (let i = 1; i < this.pagination.Pages; i++) {
+        this.pages.push(i);
+      }
+    });
   }
 
   listenForError() {

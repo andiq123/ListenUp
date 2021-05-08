@@ -12,5 +12,6 @@ namespace back.Models
         }
         public int Pages { get; set; } = 0;
         public int CurrentPage { get; set; } = 0;
+
     }
 }

@@ -1,2 +1,6 @@
+<div class="info">
+    <h1>Your Library:</h1>
+</div>
+<br>
 <app-songs [getFavSongs]="true" (noFavSongEvent)="setError($event)"></app-songs>
 <h2 *ngIf="error">{{error}}</h2>

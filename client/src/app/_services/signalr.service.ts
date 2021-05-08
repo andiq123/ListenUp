@@ -14,7 +14,10 @@ export class SignalrService {
   constructor() {}
 
   connectToSignal() {
-    this.con = new signalR.HubConnectionBuilder().withUrl(this.baseUrl).build();
+    this.con = new signalR.HubConnectionBuilder()
+      .configureLogging(signalR.LogLevel.None)
+      .withUrl(this.baseUrl)
+      .build();
 
     this.con
       .start()

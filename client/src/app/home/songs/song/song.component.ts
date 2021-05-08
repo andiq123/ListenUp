@@ -102,8 +102,11 @@ export class SongComponent implements OnInit, OnDestroy {
           const fileUrl = URL.createObjectURL(song);
           this.song.bufferURL = fileUrl;
 
-          if (changeSong) this.playerService.changeCurrentSong(this.song);
-          else this.downloadSong();
+          if (changeSong) {
+            this.playerService.changeCurrentSong(this.song);
+          } else {
+            this.downloadSong();
+          }
 
           this.signalrService.RemoveMyselfFromQueue(this.song.id);
           this.progress = 0;
@@ -129,6 +132,7 @@ export class SongComponent implements OnInit, OnDestroy {
   getSongTitle() {
     return getTrimmedText(this.song.title, this.limitChars);
   }
+
   setPlayingState(id: number, playing: boolean) {
     if (this.song.id === id) this.playing = playing;
   }
@@ -143,6 +147,7 @@ export class SongComponent implements OnInit, OnDestroy {
       (e) => console.log(e)
     );
   }
+
   addSongToFav() {
     this.songsService.addSongToFav(this.song).subscribe(
       (data: any) => {
@@ -155,5 +160,15 @@ export class SongComponent implements OnInit, OnDestroy {
         } else this.isAddedToLibrary = false;
       }
     );
+  }
+
+  cacheSong() {
+    caches.open('info').then((cache) => {});
+  }
+
+  getCachedSong() {
+    caches.open('info').then((cache) => {
+      cache.keys();
+    });
   }
 }

@@ -1,6 +1,12 @@
 <div class="songs-container">
+    <div class="pagination" *ngIf="pagination">
+        <button mat-button [class.active]="page === pagination.CurrentPage" *ngFor="let page of pages"
+            (click)="changePage(page)">{{page}}</button>
+    </div>
+
     <div class="songs-content" *ngIf="!loading">
-        <app-song *ngFor="let song of songs" [song]="song" [isAddedToLibrary]="getFavSongs" (removedSongFromFav)="onRemovedSongFromFav()"></app-song>
+        <app-song *ngFor="let song of songs" [song]="song" [isAddedToLibrary]="getFavSongs"
+            (removedSongFromFav)="onRemovedSongFromFav()"></app-song>
     </div>
 
     <app-loading *ngIf="loading"> </app-loading>
@@ -8,5 +14,4 @@
     <div class="error" *ngIf="error && !loading">
         <h2>Sorry but no music with this name was found...</h2>
     </div>
-
 </div>

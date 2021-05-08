@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using back.Extensions;
 using back.Hubs;
+using back.Hubs.UsersOnSite;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -54,10 +55,14 @@ namespace back
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<Loading>("/loading");
+                endpoints.MapHub<UsersOnSite>("/presence");
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

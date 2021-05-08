@@ -1,5 +1,7 @@
+import { ArrayType } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 
@@ -9,8 +11,11 @@ import { AuthService } from '../_services/auth.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  errors: string[] = [];
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {}
 
@@ -20,17 +25,31 @@ export class RegisterComponent implements OnInit {
       .register({ username, password, confirmPassword })
       .subscribe(
         (data) => {
+          this.snackBar.open('User Registered Successfully', 'close', {
+            duration: 5000,
+          });
           this.router.navigate(['/login']);
         },
         (e) => {
-          this.errors = [];
-          if (e.error.message) {
-            this.errors.push(e.error.message);
-          }
-          if (e.error.errors) {
-            e.error.errors.forEach((error: any) => {
-              this.errors.push(error);
-            });
+          const validation = e.error.errors;
+          if (validation) {
+            if (typeof validation === typeof []) {
+              validation.forEach((error: string) => {
+                this.snackBar.open(error, 'close', {
+                  duration: 5000,
+                });
+              });
+            } else {
+              for (const key in validation) {
+                validation[key].forEach((error: string) => {
+                  this.snackBar.open(error, 'close', {
+                    duration: 5000,
+                  });
+                });
+              }
+            }
+          } else if (e.error.message) {
+            this.snackBar.open(e.error.message, 'close', { duration: 5000 });
           }
         }
       );

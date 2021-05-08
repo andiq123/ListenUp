@@ -1,21 +1,17 @@
 <form #form="ngForm" (submit)="onSubmit(form)">
     <mat-form-field>
         <mat-label>Username</mat-label>
-        <input matInput type="text" name="username" ngModel required>
+        <input matInput type="text" name="username" ngModel required minlength="5">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput type="password" name="password" ngModel required #password>
+        <input matInput type="password" name="password" ngModel required #password minlength="5">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Confirm Password</mat-label>
-        <input matInput type="password" name="confirmPassword" ngModel required #confirmPassword>
+        <input matInput type="password" name="confirmPassword" ngModel required #confirmPassword minlength="5">
     </mat-form-field>
     <mat-error *ngIf="confirmPassword.value && password.value != confirmPassword.value">Passwords doesnt match!
     </mat-error>
     <button mat-raised-button type="submit" [disabled]="!form.valid">Register</button>
 </form>
-
-<div class="errors" *ngIf="errors">
-    <mat-error *ngFor="let error of errors">{{error}}</mat-error>
-</div>

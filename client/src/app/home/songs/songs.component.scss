@@ -2,8 +2,21 @@
   width: 100%;
   text-align: center;
 }
+
 .songs-container {
   width: 100%;
   height: 100%;
   margin-bottom: 120px;
+}
+
+.active {
+  background-color: rgb(75, 69, 69);
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 30%;
+  margin: 0 auto;
 }

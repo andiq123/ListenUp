@@ -1,41 +1,93 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ISong } from '../_models/song';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { IPagination } from '../_models/pagination';
+import { IState } from '../_models/state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SongsService {
   baseUrl = environment.baseUrl;
-  songs: ISong[] = [];
   favSongs: ISong[] = [];
   favSongsChanged = new Subject<ISong[]>();
   loading = new Subject<boolean>();
   errorHappened = new Subject<string>();
   noFavSongs = new Subject();
+  searchCriteria!: string;
+  states: IState[] = [];
+  firstRun = true;
 
   public songsChanged = new Subject<ISong[]>();
+  public paginationChanged = new Subject<IPagination>();
 
   constructor(private http: HttpClient) {}
 
-  getSongs() {
-    return this.songs.slice();
+  getLatestSearchCriteria(): string {
+    const stateFromCache = localStorage.getItem('state');
+    if (stateFromCache) {
+      const states = <IState[]>JSON.parse(stateFromCache);
+      const lastState = states[states.length - 1];
+      this.paginationChanged.next(lastState.pagination);
+      return lastState.searchCriteria;
+    }
+    return '';
   }
 
-  loadSongs(name: string) {
-    this.songs = [];
+  getSongs() {
+    const stateFromCache = localStorage.getItem('state');
+    if (stateFromCache) {
+      const states = <IState[]>JSON.parse(stateFromCache);
+      const lastState = states[states.length - 1];
+      this.paginationChanged.next(lastState.pagination);
+      return lastState.songs;
+    }
+    return [];
+  }
+
+  loadSongs(name: string = this.searchCriteria, pageNumber: number = 1) {
+    const stateFromCache = localStorage.getItem('state');
+    if (stateFromCache) {
+      const states = <IState[]>JSON.parse(stateFromCache);
+      const currentState = states.find(
+        (x) =>
+          x.pagination?.CurrentPage == pageNumber && x.searchCriteria == name
+      );
+      if (currentState) {
+        this.paginationChanged.next(currentState.pagination);
+        return this.songsUpdated(currentState.songs);
+      }
+    }
+
+    this.searchCriteria = name;
     this.loading.next(true);
-    this.songsUpdated(this.songs.slice());
     this.http
-      .get<ISong[]>(this.baseUrl + 'songs' + '?name=' + name)
+      .get<ISong[]>(
+        this.baseUrl + 'songs' + '?name=' + name + '&page=' + pageNumber,
+        {
+          observe: 'response',
+        }
+      )
       .pipe()
       .subscribe(
-        (songs: ISong[]) => {
-          this.songs = songs;
-          this.songsUpdated(this.songs.slice());
+        (data: HttpResponse<ISong[]>) => {
+          let pagination = data.headers.get('Pagination');
+          if (pagination) {
+            const paginationObject = <IPagination>JSON.parse(pagination);
+            this.paginationChanged.next(paginationObject);
+          }
+          const songs = <ISong[]>data.body;
+          const state: IState = {
+            pagination: <IPagination>JSON.parse(pagination!),
+            searchCriteria: name,
+            songs: songs,
+          };
+          this.states.push(state);
+          localStorage.setItem('state', JSON.stringify(this.states));
+          this.songsUpdated(songs);
           this.loading.next(false);
         },
         (e) => {
@@ -55,7 +107,7 @@ export class SongsService {
       link: song.downloadUrl,
       songId: song.id,
     };
-    return this.http.post(this.baseUrl + 'songs', data, {
+    return this.http.post(this.baseUrl + 'songs/download', data, {
       responseType: 'arraybuffer',
       observe: 'events',
       reportProgress: true,
@@ -71,6 +123,9 @@ export class SongsService {
   }
 
   getMyFavSongs() {
+    if (this.favSongs.length > 0) {
+      return this.favSongsChanged.next(this.favSongs);
+    }
     this.http
       .get<ISong[]>(this.baseUrl + 'favsongs/get')
       .pipe(
@@ -96,6 +151,10 @@ export class SongsService {
           if (this.favSongs.length === 0) this.noFavSongs.next();
           this.favSongsChanged.next(this.favSongs);
           return data;
+        }),
+        catchError((e) => {
+          this.favSongs = this.favSongs.filter((x) => x !== song);
+          return of(e);
         })
       );
   }

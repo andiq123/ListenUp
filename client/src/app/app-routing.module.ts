@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SignOutComponent } from './sign-out/sign-out.component';
+import { PresenceComponent } from './presence/presence.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'signout',
     component: SignOutComponent,
+  },
+  {
+    path: 'presence',
+    component: PresenceComponent,
   },
   { path: 'mysongs', component: FavSongsComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },

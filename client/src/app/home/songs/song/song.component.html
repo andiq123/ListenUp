@@ -1,6 +1,5 @@
 <mat-card *ngIf="song">
     <mat-card-content>
-        <p>{{song.id}}</p>
         <button mat-button (click)="selectSongToPlay()" [disabled]="progress > 0">
             <mat-progress-spinner [mode]="progress>0 ? 'determinate' : 'indeterminate'" [color]="colorLoading"
                 [value]="progress" *ngIf="loading">

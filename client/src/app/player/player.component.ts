@@ -66,7 +66,7 @@ export class PlayerComponent implements OnInit {
   }
 
   changeVolume($event: MatSliderChange) {
-    if ($event.value) {
+    if ($event.value || $event.value === 0) {
       this.audioPlayer.volume = $event.value;
       this.volume = $event.value;
     }

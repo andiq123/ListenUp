@@ -30,7 +30,7 @@ namespace back.Controllers
             return Ok(paginatedResponse.Items);
         }
 
-        [HttpPost]
+        [HttpPost("download")]
         public async Task<IActionResult> DownloadSongByLink([FromBody] SongDto song)
         {
             if (song == null) return BadRequest("Please give me data!");

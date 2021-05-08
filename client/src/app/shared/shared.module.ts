@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [],
@@ -25,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSliderModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatPaginatorModule,
   ],
   exports: [
     MatToolbarModule,
@@ -37,6 +39,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSliderModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatPaginatorModule,
   ],
 })
 export class SharedModule {}

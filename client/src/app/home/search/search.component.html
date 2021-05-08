@@ -2,7 +2,7 @@
     <form #form="ngForm" (submit)="onSubmit(form)" class="example-form">
         <mat-form-field class="example-full-width">
             <mat-label>Search a song</mat-label>
-            <input matInput placeholder="Search a song..." name="searchValue" ngModel required>
+            <input matInput placeholder="Search a song..." name="searchValue" [ngModel]="value" required>
         </mat-form-field>
         <button mat-raised-button type="submit" [disabled]="!form.valid">Search</button>
     </form>

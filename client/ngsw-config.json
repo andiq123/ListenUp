@@ -26,5 +26,27 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-favSong",
+      "urls": ["api/favsongs/get"],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "3d",
+        "timeout": "10s"
+      }
+    },
+    {
+      "name": "api-download",
+      "urls": ["api/songs/download"],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 200,
+        "maxAge": "3d",
+        "timeout": "10s"
+      }
+    }
   ]
 }

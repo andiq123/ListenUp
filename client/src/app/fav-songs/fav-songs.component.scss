@@ -1,4 +1,18 @@
-h2 {
-  width: 100%;
+.info {
+  border: 2px solid rgb(75, 73, 73);
+  margin: 10px;
+  width: 15%;
+  border-radius: 20px;
   text-align: center;
+  h2 {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media only screen and(max-width:700px) {
+  .info {
+    width: 90%;
+    margin: 20px auto;
+  }
 }
