@@ -17,7 +17,7 @@ export class SongsService {
   loading = new Subject<boolean>();
   errorHappened = new Subject<string>();
   noFavSongs = new Subject();
-  searchCriteria: string = '';
+  searchCriteria!: string;
   states: IState[] = [];
   firstRun = true;
 
@@ -31,8 +31,10 @@ export class SongsService {
     if (stateFromCache) {
       const states = <IState[]>JSON.parse(stateFromCache);
       const lastState = states[states.length - 1];
-      this.paginationChanged.next(lastState.pagination);
-      return lastState.searchCriteria;
+      if (lastState.pagination)
+        this.paginationChanged.next(lastState.pagination);
+      if (lastState.searchCriteria) return lastState.searchCriteria;
+      return '';
     }
     return '';
   }

@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const value = form.value.searchValue;
-    this.songsService.loadSongs(value);
+    console.log(this.value);
+    this.songsService.loadSongs(this.value);
   }
 }
