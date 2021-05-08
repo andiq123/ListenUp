@@ -30,6 +30,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.listenForAuthenticatedChanges();
   }
+
   listenForAuthenticatedChanges() {
     this.authService.authenticated.subscribe((val) => {
       this.isAuthenticated = val;
