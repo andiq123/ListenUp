@@ -17,7 +17,7 @@ export class SongsService {
   loading = new Subject<boolean>();
   errorHappened = new Subject<string>();
   noFavSongs = new Subject();
-  searchCriteria!: string;
+  searchCriteria: string = '';
   states: IState[] = [];
   firstRun = true;
 

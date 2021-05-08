@@ -8,11 +8,11 @@ import { SongsService } from 'src/app/_services/songs.service';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-  value!: string;
+  value: string = ' ';
   constructor(private songsService: SongsService) {}
 
   ngOnInit(): void {
-    this.value = this.songsService.getLatestSearchCriteria();
+    this.value = this.songsService.getLatestSearchCriteria() ?? ' ';
   }
 
   onSubmit(form: NgForm) {
