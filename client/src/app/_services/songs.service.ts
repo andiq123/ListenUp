@@ -24,7 +24,9 @@ export class SongsService {
   public songsChanged = new Subject<ISong[]>();
   public paginationChanged = new Subject<IPagination>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    localStorage.removeItem('state');
+  }
 
   getLatestSearchCriteria(): string {
     const stateFromCache = localStorage.getItem('state');
@@ -63,40 +65,41 @@ export class SongsService {
         return this.songsUpdated(currentState.songs);
       }
     }
-
-    this.searchCriteria = name;
-    this.loading.next(true);
-    this.http
-      .get<ISong[]>(
-        this.baseUrl + 'songs' + '?name=' + name + '&page=' + pageNumber,
-        {
-          observe: 'response',
-        }
-      )
-      .pipe()
-      .subscribe(
-        (data: HttpResponse<ISong[]>) => {
-          let pagination = data.headers.get('Pagination');
-          if (pagination) {
-            const paginationObject = <IPagination>JSON.parse(pagination);
-            this.paginationChanged.next(paginationObject);
+    if (name && name !== undefined) {
+      this.searchCriteria = name;
+      this.loading.next(true);
+      this.http
+        .get<ISong[]>(
+          this.baseUrl + 'songs' + '?name=' + name + '&page=' + pageNumber,
+          {
+            observe: 'response',
           }
-          const songs = <ISong[]>data.body;
-          const state: IState = {
-            pagination: <IPagination>JSON.parse(pagination!),
-            searchCriteria: name,
-            songs: songs,
-          };
-          this.states.push(state);
-          localStorage.setItem('state', JSON.stringify(this.states));
-          this.songsUpdated(songs);
-          this.loading.next(false);
-        },
-        (e) => {
-          this.errorHappened.next(e.error);
-          this.loading.next(false);
-        }
-      );
+        )
+        .pipe()
+        .subscribe(
+          (data: HttpResponse<ISong[]>) => {
+            let pagination = data.headers.get('Pagination');
+            if (pagination) {
+              const paginationObject = <IPagination>JSON.parse(pagination);
+              this.paginationChanged.next(paginationObject);
+            }
+            const songs = <ISong[]>data.body;
+            const state: IState = {
+              pagination: <IPagination>JSON.parse(pagination!),
+              searchCriteria: name,
+              songs: songs,
+            };
+            this.states.push(state);
+            localStorage.setItem('state', JSON.stringify(this.states));
+            this.songsUpdated(songs);
+            this.loading.next(false);
+          },
+          (e) => {
+            this.errorHappened.next(e.error);
+            this.loading.next(false);
+          }
+        );
+    }
   }
 
   songsUpdated(songs: ISong[]) {
