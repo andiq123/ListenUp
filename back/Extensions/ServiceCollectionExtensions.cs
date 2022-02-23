@@ -90,7 +90,11 @@ namespace back.Extensions
             services.AddScoped<IFavoriteSongService, FavoriteSongService>();
 
             //Cors
-            services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+            services.AddCors(options =>
+             options.AddDefaultPolicy(x =>
+                x.WithOrigins("http://localhost:4200")
+                 .AllowAnyHeader().AllowAnyMethod()));
+
             return services;
         }
     }

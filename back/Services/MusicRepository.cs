@@ -51,8 +51,8 @@ namespace back.Services
                     }
                     var title = songElement.QuerySelector("span.tt").InnerHtml.ExludeBadSigns();
                     var name = songElement.QuerySelector(".title a").InnerHtml.ExludeBadSigns();
-                    var duration = songElement.QuerySelector(".dur").InnerHtml.ExludeBadSigns(); ;
-                    var downloadUrl = songElement.QuerySelector("a.dwnld.fa.fa-download").GetAttribute("href");
+                    var duration = songElement.QuerySelector(".dur").InnerHtml.ExludeBadSigns();
+                    var downloadUrl = songElement.QuerySelector("a.dwnld.fa.fa-download").GetAttribute("href") + "?play";
                     songs.Add(new Song { Id = random, Title = title, Name = name, Duration = duration, DownloadUrl = downloadUrl });
                     previousRandomNr = random;
                 }
