@@ -5,4 +5,5 @@ https://listenup-x.herokuapp.com/home
 Old code, buggy.
 ---
 Todo:
-  Refactor in NextJs and NestJs.
+  <s>Refactor in NextJs and NestJs.</s>
+  Done: https://muz-x.vercel.app/
